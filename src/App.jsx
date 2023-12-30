@@ -19,10 +19,24 @@ function App() {
 
     setGameTurns((prevGameTurns) => {
       //below we are updating the state of an object i.e. array, immutably
+      //also here we are setting player: activePlayer to get the active player but we are merging two different states i.e. activePLayer and gameTurns. Also just doing this will not guarantee us the active player because React schedules state updates and as we know if we want to update state based on the previous state then we should not set or use it directly
+      // const updatedGameTurns = [
+      //   { square: { rowIndex, colIndex }, player: activePlayer },
+      //   ...prevGameTurns,
+      // ];
+
+      //To resolve the above mentioned issue, here we are assuming activePLayer as "X" and then comparing it with the recent gameTurn's activePlayer. We have used prevGameTurns[0] because we are saving the recent gameTurn at first place. We have also catered the case if gameTurns array is empty which would be the case at first turn.
+      let currentPlayer = "X";
+
+      if (prevGameTurns.length > 0 && prevGameTurns[0].player === "X") {
+        currentPlayer = "O";
+      }
       const updatedGameTurns = [
-        { square: { rowIndex, colIndex }, player: activePlayer },
+        { square: { rowIndex, colIndex }, player: currentPlayer },
         ...prevGameTurns,
       ];
+
+      return updatedGameTurns;
     });
   }
 
