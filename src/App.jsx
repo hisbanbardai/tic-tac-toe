@@ -56,7 +56,9 @@ function App() {
           />
         </ol>
         <GameBoard
-          activePlayerSymbol={activePlayer}
+          //no need to send activePlayer because we have activePlayer's state in gameTurns
+          // activePlayerSymbol={activePlayer}
+          turns={gameTurns}
           clickSquare={handleSelectSquare}
         />
       </div>
