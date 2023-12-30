@@ -62,7 +62,7 @@ function App() {
           clickSquare={handleSelectSquare}
         />
       </div>
-      <Logs />
+      <Logs turns={gameTurns} />
     </main>
   );
 }
