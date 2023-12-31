@@ -35,7 +35,10 @@ function App() {
   //DERIVING ACTIVE PLAYER STATE FROM GAMETURNS instead of managing its own separate state
   const activePlayer = deriveActivePlayer(gameTurns);
 
-  const gameBoard = initialGameboard;
+  //we should not do the below because of the immutability rule i.e. objects cannot be copied just by assignment operator. They will always refer to the same object in memory
+  // const gameBoard = initialGameboard;
+
+  const gameBoard = [...initialGameboard.map((array) => [...array])];
   for (const turn of gameTurns) {
     //object destructuring below
     const { square, player } = turn;
@@ -90,6 +93,10 @@ function App() {
     });
   }
 
+  function handleGameRestart() {
+    setGameTurns([]);
+  }
+
   return (
     <main>
       <div id="game-container">
@@ -105,7 +112,11 @@ function App() {
             symbol={"O"}
           />
         </ol>
-        <p>{(winner || gameOver) && <GameOver winner={winner} />}</p>
+        <p>
+          {(winner || gameOver) && (
+            <GameOver winner={winner} onRestart={handleGameRestart} />
+          )}
+        </p>
         <GameBoard
           //no need to send activePlayer because we have activePlayer's state in gameTurns
           // activePlayerSymbol={activePlayer}
