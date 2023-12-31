@@ -4,6 +4,12 @@ import Player from "./components/Player";
 import Logs from "./components/Log";
 import { WINNING_COMBINATIONS } from "./winning-combinations";
 
+const initialGameboard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
+
 function deriveActivePlayer(gameTurns) {
   let activePlayer = "X";
 
@@ -27,6 +33,31 @@ function App() {
 
   //DERIVING ACTIVE PLAYER STATE FROM GAMETURNS instead of managing its own separate state
   const activePlayer = deriveActivePlayer(gameTurns);
+
+  const gameBoard = initialGameboard;
+  for (const turn of gameTurns) {
+    //object destructuring below
+    const { square, player } = turn;
+    const { rowIndex, colIndex } = square;
+
+    gameBoard[rowIndex][colIndex] = player;
+  }
+  //Below we are going through every winning combination each time App component gets re-rendered to see if we have a winner. But to get the values off of the gameboard we need access to it. That is why we will lift the game board from Gameboard component to App component
+  let winner;
+
+  for (const combination of WINNING_COMBINATIONS) {
+    const firstSymbol = gameBoard[combination[0].row][combination[0].column];
+    const secondSymbol = gameBoard[combination[1].row][combination[1].column];
+    const thirdSymbol = gameBoard[combination[2].row][combination[2].column];
+
+    if (
+      firstSymbol &&
+      firstSymbol === secondSymbol &&
+      firstSymbol === thirdSymbol
+    ) {
+      winner = firstSymbol;
+    }
+  }
 
   function handleSelectSquare(rowIndex, colIndex) {
     // setactivePlayer((currActivePlayer) =>
@@ -70,10 +101,11 @@ function App() {
             symbol={"O"}
           />
         </ol>
+        <p>{winner && `You won ${winner}`}</p>
         <GameBoard
           //no need to send activePlayer because we have activePlayer's state in gameTurns
           // activePlayerSymbol={activePlayer}
-          turns={gameTurns}
+          board={gameBoard}
           clickSquare={handleSelectSquare}
         />
       </div>
