@@ -45,12 +45,14 @@ export default function GameBoard({ turns, clickSquare }) {
         return (
           <li key={rowIndex}>
             <ol>
+              {/* below col represents player symbol */}
               {row.map((col, colIndex) => {
                 return (
                   <li key={colIndex}>
                     <button
                       //sending information which square was clicked
                       onClick={() => clickSquare(rowIndex, colIndex)}
+                      disabled={col !== null}
                     >
                       {/* here "col" is player's symbol */}
                       {col}
