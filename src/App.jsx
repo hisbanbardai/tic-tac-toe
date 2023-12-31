@@ -3,6 +3,7 @@ import GameBoard from "./components/Gameboard";
 import Player from "./components/Player";
 import Logs from "./components/Log";
 import { WINNING_COMBINATIONS } from "./winning-combinations";
+import GameOver from "./components/GameOver";
 
 const initialGameboard = [
   [null, null, null],
@@ -59,6 +60,9 @@ function App() {
     }
   }
 
+  //as we know that there can be total 9 turns so below we are checking if total turns are 9 and we do not have a winner then set gameOver as true
+  const gameOver = gameTurns.length === 9 && !winner;
+
   function handleSelectSquare(rowIndex, colIndex) {
     // setactivePlayer((currActivePlayer) =>
     //   currActivePlayer === "X" ? "O" : "X"
@@ -101,7 +105,7 @@ function App() {
             symbol={"O"}
           />
         </ol>
-        <p>{winner && `You won ${winner}`}</p>
+        <p>{(winner || gameOver) && <GameOver winner={winner} />}</p>
         <GameBoard
           //no need to send activePlayer because we have activePlayer's state in gameTurns
           // activePlayerSymbol={activePlayer}
