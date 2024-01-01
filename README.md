@@ -12,9 +12,9 @@ Game History: Review the history of your moves and navigate through different ga
 
 ### Start the Game:
 
-Clone the repository to your local machine.
-Run npm install to install dependencies.
-Execute npm run dev to launch the game in your browser.
+- Clone the repository to your local machine.
+- Run `npm install` to install dependencies.
+- Execute `npm run dev` to launch the game in your browser.
 
 ### Make Your Move:
 
