@@ -32,6 +32,20 @@ function App() {
   const [gameTurns, setGameTurns] = useState([]);
   //above we are also lifting the state up because the gameTurns state is going to be used by Gameboard and Log components.
 
+  const [playerName, setPlayerName] = useState({
+    X: "Player 1",
+    O: "Player 2",
+  });
+  //above we are setting a separate players names state and not lifting the player name state from Player component because in Player component we are update the Player state everytime user input is changed. So if we lift it up to the App component then on every input change whole App component will be rendered
+  function handlePlayerName(symbol, playerName) {
+    setPlayerName((prevPlayersName) => {
+      return {
+        ...prevPlayersName,
+        [symbol]: playerName,
+      };
+    });
+  }
+
   //DERIVING ACTIVE PLAYER STATE FROM GAMETURNS instead of managing its own separate state
   const activePlayer = deriveActivePlayer(gameTurns);
 
@@ -59,7 +73,7 @@ function App() {
       firstSymbol === secondSymbol &&
       firstSymbol === thirdSymbol
     ) {
-      winner = firstSymbol;
+      winner = playerName[firstSymbol];
     }
   }
 
@@ -105,11 +119,13 @@ function App() {
             isActive={activePlayer === "X"}
             initialName={"Player 1"}
             symbol={"X"}
+            onPlayerNameChange={handlePlayerName}
           />
           <Player
             isActive={activePlayer === "O"}
             initialName={"Player 2"}
             symbol={"O"}
+            onPlayerNameChange={handlePlayerName}
           />
         </ol>
         <p>
