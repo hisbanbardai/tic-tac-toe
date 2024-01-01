@@ -73,7 +73,7 @@ function App() {
 
   const [playerName, setPlayerName] = useState(PLAYERS);
   //above we are setting a separate players names state and not lifting the player name state from Player component because in Player component we are update the Player state everytime user input is changed. So if we lift it up to the App component then on every input change whole App component will be rendered
-  function handlePlayerName(symbol, playerName) {
+  function handleChangePlayerName(symbol, playerName) {
     setPlayerName((prevPlayersName) => {
       return {
         ...prevPlayersName,
@@ -131,13 +131,13 @@ function App() {
             isActive={activePlayer === "X"}
             initialName={PLAYERS.X}
             symbol={"X"}
-            onPlayerNameChange={handlePlayerName}
+            onPlayerNameChange={handleChangePlayerName}
           />
           <Player
             isActive={activePlayer === "O"}
             initialName={PLAYERS.O}
             symbol={"O"}
-            onPlayerNameChange={handlePlayerName}
+            onPlayerNameChange={handleChangePlayerName}
           />
         </ol>
         <p>
